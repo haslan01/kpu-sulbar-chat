@@ -3,126 +3,322 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot KPU Sulbar</title>
+    <title>Chatbot KPU Sulbar - Modern</title>
     <style>
         :root {
-            --kpu-gold: #f39c12;
-            --kpu-dark: #2c3e50;
-            --kpu-light: #ecf0f1;
+            --kpu-maroon: #8B1538;
+            --kpu-maroon-light: #A91D42;
+            --kpu-maroon-dark: #6B0F2A;
+            --kpu-gold: #D4AF37;
+            --kpu-white: #FFFFFF;
+            --kpu-gray: #F5F5F5;
+            --shadow-color: rgba(139, 21, 56, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f4f4f4;
+            font-family: 'Inter', 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
             margin: 0;
             padding: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* Widget Container */
+        /* Widget Container - Modern Design */
         #chat-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 350px;
-            height: 500px;
+            width: 400px;
+            height: 600px;
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            border: 2px solid var(--kpu-gold);
+            position: relative;
         }
 
-        /* Header dengan Tema KPU */
+        /* Header Modern dengan Gradasi Maroon */
         #chat-header {
-            background: var(--kpu-dark);
+            background: linear-gradient(135deg, var(--kpu-maroon) 0%, var(--kpu-maroon-dark) 100%);
             color: white;
-            padding: 15px;
-            text-align: center;
-            font-weight: bold;
-            border-bottom: 3px solid var(--kpu-gold);
+            padding: 25px 20px;
+            position: relative;
+            box-shadow: 0 4px 15px var(--shadow-color);
         }
 
-        /* Area Chat dengan Background Gedung */
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-text h1 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .header-text p {
+            font-size: 12px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .status-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #4CAF50;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Chat Window dengan Background Kantor KPU */
         #chat-window {
             flex: 1;
-            padding: 15px;
+            padding: 20px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            /* Ganti URL di bawah dengan link foto gedung KPU Sulbar yang sebenarnya */
-            background-image: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), 
-                              url('https://via.placeholder.com/350x500?text=Gedung+KPU+Sulbar');
+            gap: 12px;
+            background: 
+                linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)),
+                url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=800');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
         }
 
+        /* Custom Scrollbar */
+        #chat-window::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #chat-window::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        #chat-window::-webkit-scrollbar-thumb {
+            background: var(--kpu-maroon-light);
+            border-radius: 10px;
+        }
+
+        /* Messages - Modern Bubble Style */
         .message {
-            max-width: 80%;
-            padding: 10px 15px;
-            border-radius: 15px;
+            max-width: 75%;
+            padding: 12px 16px;
+            border-radius: 18px;
             font-size: 14px;
-            line-height: 1.4;
+            line-height: 1.5;
+            position: relative;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .user-msg {
             align-self: flex-end;
-            background: var(--kpu-gold);
+            background: linear-gradient(135deg, var(--kpu-maroon) 0%, var(--kpu-maroon-light) 100%);
             color: white;
-            border-bottom-right-radius: 2px;
+            border-bottom-right-radius: 4px;
         }
 
         .bot-msg {
             align-self: flex-start;
-            background: #e1e1e1;
+            background: white;
             color: #333;
-            border-bottom-left-radius: 2px;
+            border: 1px solid #e0e0e0;
+            border-bottom-left-radius: 4px;
         }
 
-        /* Input Area */
+        .message-time {
+            font-size: 10px;
+            opacity: 0.6;
+            margin-top: 4px;
+            display: block;
+        }
+
+        /* Typing Indicator */
+        .typing-indicator {
+            align-self: flex-start;
+            background: white;
+            padding: 12px 16px;
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            display: flex;
+            gap: 4px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--kpu-maroon-light);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+
+        /* Input Area - Modern Floating Style */
         #chat-input-area {
             display: flex;
-            padding: 10px;
+            padding: 15px;
             background: white;
-            border-top: 1px solid #ddd;
+            border-top: 1px solid #f0f0f0;
+            gap: 10px;
+            align-items: center;
         }
 
         #chat-input {
             flex: 1;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 14px 18px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
             outline: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: var(--kpu-gray);
+        }
+
+        #chat-input:focus {
+            border-color: var(--kpu-maroon);
+            background: white;
         }
 
         #send-btn {
-            background: var(--kpu-gold);
+            background: linear-gradient(135deg, var(--kpu-maroon) 0%, var(--kpu-maroon-light) 100%);
             color: white;
             border: none;
-            padding: 10px 15px;
-            margin-left: 5px;
-            border-radius: 5px;
+            padding: 14px 20px;
+            border-radius: 25px;
             cursor: pointer;
-            font-weight: bold;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        #send-btn:hover { background: #d35400; }
+        #send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--shadow-color);
+        }
+
+        #send-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Logo KPU Watermark */
+        .watermark {
+            position: absolute;
+            bottom: 80px;
+            right: 20px;
+            opacity: 0.05;
+            font-size: 100px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            #chat-container {
+                width: 100%;
+                height: 100vh;
+                border-radius: 0;
+            }
+        }
     </style>
 </head>
 <body>
 
 <div id="chat-container">
     <div id="chat-header">
-        Layanan Informasi KPU SULBAR
+        <div class="status-indicator">
+            <div class="status-dot"></div>
+            <span>Online</span>
+        </div>
+        <div class="header-content">
+            <div class="header-icon">
+                🗳️
+            </div>
+            <div class="header-text">
+                <h1>KPU Sulawesi Barat</h1>
+                <p>Layanan Informasi Pemilu</p>
+            </div>
+        </div>
     </div>
-    <div id="chat-window" id="messages">
-        <div class="message bot-msg">Halo! Ada yang bisa kami bantu terkait Pemilu di Sulawesi Barat?</div>
+    
+    <div id="chat-window">
+        <div class="watermark">🏛️</div>
+        <div class="message bot-msg">
+            Selamat datang di Layanan Informasi KPU Sulawesi Barat! 👋
+            <span class="message-time" id="welcome-time"></span>
+        </div>
+        <div class="message bot-msg">
+            Ada yang bisa kami bantu terkait informasi Pemilu?
+            <span class="message-time" id="help-time"></span>
+        </div>
     </div>
+    
     <div id="chat-input-area">
-        <input type="text" id="chat-input" placeholder="Ketik pesan Anda...">
-        <button id="send-btn">Kirim</button>
+        <input type="text" id="chat-input" placeholder="Ketik pesan Anda..." autocomplete="off">
+        <button id="send-btn">
+            <span>Kirim</span>
+            <span>➤</span>
+        </button>
     </div>
 </div>
 
@@ -132,14 +328,49 @@
     const sendBtn = document.getElementById('send-btn');
 
     // GANTI URL INI DENGAN URL WEBHOOK N8N ANDA
-    const N8N_WEBHOOK_URL = 'https://overfraught-tawanda-derangeable.ngrok-free.dev/webhook/kpu-sulbar-chat';
+    const N8N_WEBHOOK_URL = 'https://overfraught-tawanda-derangeable.ngrok-free.dev/webhook-test/kpu-sulbar-chat';
+
+    // Set welcome message times
+    function setMessageTime() {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+        document.getElementById('welcome-time').textContent = timeString;
+        document.getElementById('help-time').textContent = timeString;
+    }
+    setMessageTime();
+
+    function getCurrentTime() {
+        return new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+    }
 
     function addMessage(text, sender) {
         const msgDiv = document.createElement('div');
         msgDiv.classList.add('message', sender === 'user' ? 'user-msg' : 'bot-msg');
-        msgDiv.innerText = text;
+        
+        const textNode = document.createTextNode(text);
+        msgDiv.appendChild(textNode);
+        
+        const timeSpan = document.createElement('span');
+        timeSpan.classList.add('message-time');
+        timeSpan.textContent = getCurrentTime();
+        msgDiv.appendChild(timeSpan);
+        
         chatWindow.appendChild(msgDiv);
         chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+
+    function showTypingIndicator() {
+        const typingDiv = document.createElement('div');
+        typingDiv.classList.add('typing-indicator');
+        typingDiv.id = 'typing';
+        typingDiv.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+        chatWindow.appendChild(typingDiv);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+
+    function hideTypingIndicator() {
+        const typing = document.getElementById('typing');
+        if (typing) typing.remove();
     }
 
     async function sendMessage() {
@@ -148,6 +379,8 @@
 
         addMessage(message, 'user');
         chatInput.value = '';
+        
+        showTypingIndicator();
 
         try {
             const response = await fetch(N8N_WEBHOOK_URL, {
@@ -156,16 +389,18 @@
                 body: JSON.stringify({ message: message, sender: "web-user" })
             });
 
+            hideTypingIndicator();
+
             if (response.ok) {
                 const data = await response.json();
-                // n8n harus mengembalikan JSON dengan field "output" atau sesuai settingan anda
                 addMessage(data.output || "Pesan diterima, mohon tunggu...", 'bot');
             } else {
-                addMessage("Maaf, terjadi gangguan koneksi.", 'bot');
+                addMessage("Maaf, terjadi gangguan koneksi. Silakan coba lagi.", 'bot');
             }
         } catch (error) {
+            hideTypingIndicator();
             console.error("Error:", error);
-            addMessage("Gagal menghubungi server.", 'bot');
+            addMessage("Gagal menghubungi server. Pastikan koneksi internet Anda aktif.", 'bot');
         }
     }
 
@@ -173,8 +408,10 @@
     chatInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') sendMessage();
     });
+
+    // Auto focus on input
+    chatInput.focus();
 </script>
 
 </body>
-
 </html>
