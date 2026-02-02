@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot KPU Sulbar</title>
+    <style>
+        :root {
+            --kpu-gold: #f39c12;
+            --kpu-dark: #2c3e50;
+            --kpu-light: #ecf0f1;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Widget Container */
+        #chat-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 2px solid var(--kpu-gold);
+        }
+
+        /* Header dengan Tema KPU */
+        #chat-header {
+            background: var(--kpu-dark);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            border-bottom: 3px solid var(--kpu-gold);
+        }
+
+        /* Area Chat dengan Background Gedung */
+        #chat-window {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            /* Ganti URL di bawah dengan link foto gedung KPU Sulbar yang sebenarnya */
+            background-image: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), 
+                              url('https://via.placeholder.com/350x500?text=Gedung+KPU+Sulbar');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .user-msg {
+            align-self: flex-end;
+            background: var(--kpu-gold);
+            color: white;
+            border-bottom-right-radius: 2px;
+        }
+
+        .bot-msg {
+            align-self: flex-start;
+            background: #e1e1e1;
+            color: #333;
+            border-bottom-left-radius: 2px;
+        }
+
+        /* Input Area */
+        #chat-input-area {
+            display: flex;
+            padding: 10px;
+            background: white;
+            border-top: 1px solid #ddd;
+        }
+
+        #chat-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        #send-btn {
+            background: var(--kpu-gold);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin-left: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #send-btn:hover { background: #d35400; }
+    </style>
+</head>
+<body>
+
+<div id="chat-container">
+    <div id="chat-header">
+        Layanan Informasi KPU SULBAR
+    </div>
+    <div id="chat-window" id="messages">
+        <div class="message bot-msg">Halo! Ada yang bisa kami bantu terkait Pemilu di Sulawesi Barat?</div>
+    </div>
+    <div id="chat-input-area">
+        <input type="text" id="chat-input" placeholder="Ketik pesan Anda...">
+        <button id="send-btn">Kirim</button>
+    </div>
+</div>
+
+<script>
+    const chatWindow = document.getElementById('chat-window');
+    const chatInput = document.getElementById('chat-input');
+    const sendBtn = document.getElementById('send-btn');
+
+    // GANTI URL INI DENGAN URL WEBHOOK N8N ANDA
+    const N8N_WEBHOOK_URL = 'https://overfraught-tawanda-derangeable.ngrok-free.dev/webhook-test/kpu-sulbar-chat';
+
+    function addMessage(text, sender) {
+        const msgDiv = document.createElement('div');
+        msgDiv.classList.add('message', sender === 'user' ? 'user-msg' : 'bot-msg');
+        msgDiv.innerText = text;
+        chatWindow.appendChild(msgDiv);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+
+    async function sendMessage() {
+        const message = chatInput.value.trim();
+        if (!message) return;
+
+        addMessage(message, 'user');
+        chatInput.value = '';
+
+        try {
+            const response = await fetch(N8N_WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: message, sender: "web-user" })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                // n8n harus mengembalikan JSON dengan field "output" atau sesuai settingan anda
+                addMessage(data.output || "Pesan diterima, mohon tunggu...", 'bot');
+            } else {
+                addMessage("Maaf, terjadi gangguan koneksi.", 'bot');
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            addMessage("Gagal menghubungi server.", 'bot');
+        }
+    }
+
+    sendBtn.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendMessage();
+    });
+</script>
+
+</body>
+</html>
