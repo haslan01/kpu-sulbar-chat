@@ -70,6 +70,14 @@
             justify-content: center;
             font-size: 24px;
             backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        .header-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 5px;
         }
 
         .header-text h1 {
@@ -267,9 +275,16 @@
             bottom: 80px;
             right: 20px;
             opacity: 0.05;
-            font-size: 100px;
+            width: 150px;
+            height: 150px;
             pointer-events: none;
             z-index: 0;
+        }
+
+        .watermark img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         /* Responsive */
@@ -292,7 +307,7 @@
         </div>
         <div class="header-content">
             <div class="header-icon">
-                🗳️
+                <img src="logo.png" alt="Logo KPU">
             </div>
             <div class="header-text">
                 <h1>KPU Sulawesi Barat</h1>
@@ -302,7 +317,9 @@
     </div>
     
     <div id="chat-window">
-        <div class="watermark">🏛️</div>
+        <div class="watermark">
+            <img src="logo-kpu.png" alt="Watermark KPU">
+        </div>
         <div class="message bot-msg">
             Selamat datang di Layanan Informasi KPU Sulawesi Barat! 👋
             <span class="message-time" id="welcome-time"></span>
@@ -328,7 +345,7 @@
     const sendBtn = document.getElementById('send-btn');
 
     // GANTI URL INI DENGAN URL WEBHOOK N8N ANDA
-    const N8N_WEBHOOK_URL = 'https://overfraught-tawanda-derangeable.ngrok-free.dev/webhook-test/kpu-sulbar-chat';
+    const N8N_WEBHOOK_URL = 'https://overfraught-tawanda-derangeable.ngrok-free.dev/webhook/kpu-sulbar-chat';
 
     // Set welcome message times
     function setMessageTime() {
@@ -415,5 +432,3 @@
 
 </body>
 </html>
-
-
