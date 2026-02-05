@@ -432,13 +432,106 @@
     // Auto focus on input
     chatInput.focus();
 </script>
-<iframe 
-        src="https://script.google.com/macros/s/AKfycbyKBjuBVTXGu9eG8B0xcbCuWC_IbtNtBHyJMxx-UByTbop0BvbJ6USjNjkgNx_V4vQDRg/exec" 
-        style="width: 100%; height: 600px; border: none;" 
-        allow="microphone">
-</iframe>
+<!-- FLOATING CHAT ICON -->
+<div id="chat-float-btn">💬</div>
+
+<!-- CHAT IFRAME -->
+<div id="chat-iframe-wrapper">
+  <div id="chat-header">
+    <span>Chat Layanan</span>
+    <button onclick="toggleChat()">✖</button>
+  </div>
+  <iframe 
+    src="https://script.google.com/macros/s/AKfycbyKBjuBVTXGu9eG8B0xcbCuWC_IbtNtBHyJMxx-UByTbop0BvbJ6USjNjkgNx_V4vQDRg/exec"
+    frameborder="0">
+  </iframe>
+</div>
+
+<style>
+  #chat-float-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 55px;
+    height: 55px;
+    background: #0a5cff;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    z-index: 9999;
+  }
+
+  #chat-iframe-wrapper {
+    position: fixed;
+    bottom: 85px;
+    right: 20px;
+    width: 360px;
+    height: 500px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 9999;
+  }
+
+  #chat-header {
+    background: #0a5cff;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+  }
+
+  #chat-header button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  #chat-iframe-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  @media (max-width: 480px) {
+    #chat-iframe-wrapper {
+      width: 95%;
+      height: 85%;
+      right: 2.5%;
+      bottom: 80px;
+    }
+  }
+</style>
+
+<script>
+  const chatBtn = document.getElementById("chat-float-btn");
+  const chatBox = document.getElementById("chat-iframe-wrapper");
+
+  chatBtn.addEventListener("click", toggleChat);
+
+  function toggleChat() {
+    chatBox.style.display = 
+      chatBox.style.display === "none" || chatBox.style.display === ""
+      ? "flex"
+      : "none";
+  }
+</script>
+
 </body>
 </html>
+
 
 
 
